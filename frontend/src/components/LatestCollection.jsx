@@ -1,20 +1,30 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
+import ProductItem from './ProductItem';
 import Title from './Title';
 
 const LatestCollection = () => {
     const {products} =useContext(ShopContext);
-    const [latestProducts,setLatestProducts] = useState([])
+    const [latestProducts,setLatestProducts] = useState([]);
+
+    useEffect(()=>{
+      setLatestProducts(products.slice(0,10))
+    },[])
  
   return (
     <div className='my-10'>
       <div className='text-center py-8 text-3xl'>
         <Title text1={'LATEST'} text2={"COLLECTIONS"}/>
         <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'> 
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam omnis quidem rem impedit laboriosam. Ipsum eaque, rem nam voluptatum similique illum necessitatibus corporis pariatur quaerat? Illum, facere. Nisi, totam recusandae!
-        </p>
+        Discover the freshest trends of the season with Luxora’s Latest Collections. From chic women’s wear and stylish men’s outfits to adorable kids’ fashion, our handpicked range brings comfort, quality, and elegance together. Whether you’re upgrading your wardrobe or finding the perfect gift, explore the styles that define modern luxury — all in one place. </p>
       </div>
-
+      {/* Rendering products */}
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4  gap-y-6'>
+      {
+        latestProducts.map((item,index)=>(
+        <ProductItem key={index} id={item._id} image={item.image} name={item.name} price={item.price}/>))
+      }
+      </div>
     </div>
   )
 }
